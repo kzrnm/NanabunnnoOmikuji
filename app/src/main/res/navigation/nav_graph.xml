@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+
+    <activity
+        android:id="@+id/licenseActivity"
+        android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+        android:label="license_activity" />
+
+    <dialog
+        android:id="@+id/okCancelDialogFragment"
+        android:name="com.kzrnm.nanabunnnoomikuji.dialogs.OkCancelDialogFragment"
+        android:label="ok_cancel_fragment">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="message"
+            app:argType="string" />
+        <argument
+            android:name="ok_button"
+            android:defaultValue="OK"
+            app:argType="string" />
+        <argument
+            android:name="cancel_button"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="which"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </dialog>
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.kzrnm.nanabunnnoomikuji.ui.main.MainFragment"
+        android:label="main_fragment"
+        tools:layout="@layout/main_fragment">
+        <action
+            android:id="@+id/action_mainFragment_to_okCancelDialogFragment"
+            app:destination="@id/okCancelDialogFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_licenseActivity"
+            app:destination="@id/licenseActivity" />
+        <action
+            android:id="@+id/action_mainFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+
+        android:id="@+id/loginFragment"
+        android:name="com.kzrnm.nanabunnnoomikuji.ui.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/login_fragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_okCancelDialogFragment"
+            app:destination="@id/okCancelDialogFragment" />
+    </fragment>
+</navigation>

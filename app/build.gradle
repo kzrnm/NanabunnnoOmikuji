@@ -1,0 +1,92 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.android.gms.oss-licenses-plugin'
+}
+
+android {
+    compileSdk 30
+
+    def properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    defaultConfig {
+        applicationId "com.kzrnm.nanabunnnoomikuji"
+        minSdk 28
+        targetSdk 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        def OMIKUJI_URL = properties.getProperty("fanclub.omikuji")
+        buildConfigField("String", "OMIKUJI_URL", "\"${OMIKUJI_URL}\"")
+    }
+
+    buildTypes {
+        release {
+            shrinkResources true
+            minifyEnabled true
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "request"
+    productFlavors {
+        mock {
+            dimension "request"
+        }
+        twitter {
+            dimension "request"
+
+            def CONSUMER_KEY = properties.getProperty("consumer.key")
+            buildConfigField("String", "CONSUMER_KEY", "\"${CONSUMER_KEY}\"")
+            def CONSUMER_SECRET = properties.getProperty("consumer.secret")
+            buildConfigField("String", "CONSUMER_SECRET", "\"${CONSUMER_SECRET}\"")
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    def lifecycle_version = "2.3.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    implementation "androidx.preference:preference-ktx:1.1.1"
+
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
+
+    implementation "androidx.security:security-crypto:1.1.0-alpha03"
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation 'org.twitter4j:twitter4j-core:4.0.7'
+}

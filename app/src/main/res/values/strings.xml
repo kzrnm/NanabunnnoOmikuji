@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">ナナニジおみくじTweet</string>
+    <string name="not_logged_in">未ログイン</string>
+    <string name="failed_to_login">ログインに失敗しました</string>
+    <string name="license">License</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="pin">PIN</string>
+    <string name="ok">OK</string>
+    <string name="open">開く</string>
+
+    <string name="daikichi">大吉</string>
+    <string name="chukichi">中吉</string>
+    <string name="shokichi">小吉</string>
+
+    <string name="error_empty_tweet">ツイート本文が空です</string>
+    <string name="error_failed_to_tweet">ツイートに失敗しました</string>
+    <string name="tweet">Tweet</string>
+    <string name="previous_tweet">前回のツイート</string>
+</resources>

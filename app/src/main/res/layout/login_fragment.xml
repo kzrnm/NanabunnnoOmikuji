@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.kzrnm.nanabunnnoomikuji.ui.login.LoginViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.kzrnm.nanabunnnoomikuji.ui.login.LoginFragment">
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/pin_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pin_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:labelFor="@id/pin_edit"
+                android:text="@string/pin"
+                android:textSize="30sp"
+                app:autoSizeTextType="uniform" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/pin_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="pin code"
+                android:inputType="numberDecimal"
+                android:text="@={viewModel.pin}"
+                android:textSize="30sp"
+                tools:ignore="DuplicateSpeakableTextCheck" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/pin_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ok"
+            app:layout_constraintEnd_toEndOf="@+id/pin_area"
+            app:layout_constraintTop_toBottomOf="@+id/pin_area" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
