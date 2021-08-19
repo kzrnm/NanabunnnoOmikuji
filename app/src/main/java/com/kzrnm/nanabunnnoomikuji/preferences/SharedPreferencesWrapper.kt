@@ -28,18 +28,21 @@ class SharedPreferencesWrapper(context: Context) {
         )
     }
 
-    val userName: String?
-        get() = encryptedPreferences.getString(USER_NAME, null)
-    val userToken: String?
-        get() = encryptedPreferences.getString(USER_TOKEN, null)
-    val userSecret: String?
-        get() = encryptedPreferences.getString(USER_SECRET, null)
+    var openUrl: String?
+        get() = preferences.getString(OPEN_URL, null)
+        set(value) = preferences.edit().putString(OPEN_URL, value).apply()
 
     val lastTweetTime: Long
         get() = preferences.getLong(LAST_TWEET_TIME, -1)
 
     val lastTweetUrl: String?
         get() = preferences.getString(LAST_TWEET_URL, null)
+
+    val userToken: String?
+        get() = encryptedPreferences.getString(USER_TOKEN, null)
+    val userSecret: String?
+        get() = encryptedPreferences.getString(USER_SECRET, null)
+
 
     fun savePreviousStatus(status: Status) {
         preferences.edit()
@@ -50,7 +53,6 @@ class SharedPreferencesWrapper(context: Context) {
 
     fun saveUser(loginInfo: LoginInfo) {
         encryptedPreferences.edit()
-            .putString(USER_NAME, loginInfo.screenName)
             .putString(USER_TOKEN, loginInfo.token)
             .putString(USER_SECRET, loginInfo.secret)
             .apply()
@@ -58,7 +60,6 @@ class SharedPreferencesWrapper(context: Context) {
 
     fun clearUser() {
         encryptedPreferences.edit()
-            .remove(USER_NAME)
             .remove(USER_TOKEN)
             .remove(USER_SECRET)
             .apply()
@@ -66,9 +67,9 @@ class SharedPreferencesWrapper(context: Context) {
 
     companion object {
         const val ENCRYPTED_PREF_NAME = "EncryptedPref"
+        const val OPEN_URL = "openUrl"
         const val LAST_TWEET_URL = "lastTweetUrl"
         const val LAST_TWEET_TIME = "lastTweetTime"
-        const val USER_NAME = "userName"
         const val USER_TOKEN = "userToken"
         const val USER_SECRET = "userSecret"
     }

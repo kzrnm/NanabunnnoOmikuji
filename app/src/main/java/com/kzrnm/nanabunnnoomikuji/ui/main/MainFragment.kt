@@ -11,12 +11,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.kzrnm.nanabunnnoomikuji.BuildConfig
 import com.kzrnm.nanabunnnoomikuji.R
 import com.kzrnm.nanabunnnoomikuji.databinding.MainFragmentBinding
 import com.kzrnm.nanabunnnoomikuji.dialogs.OkCancelDialogFragment
+import com.kzrnm.nanabunnnoomikuji.dialogs.TextOkCancelDialogFragment
 
-class MainFragment : Fragment(), OkCancelDialogFragment.Listener {
+class MainFragment : Fragment(), OkCancelDialogFragment.Listener,
+    TextOkCancelDialogFragment.Listener {
 
     private lateinit var binding: MainFragmentBinding
     private val viewModel: MainViewModel by viewModels()
@@ -51,16 +52,37 @@ class MainFragment : Fragment(), OkCancelDialogFragment.Listener {
             }
             findNavController().navigate(action)
         }
+        binding.openOmikujiButton.setOnLongClickListener {
+            val action = MainFragmentDirections.actionMainFragmentToTextOkCancelDialogFragment(
+                "URL",
+                "開くURLを設定",
+                "OK",
+                "Cancel",
+                viewModel.pref.openUrl,
+                "http://example.com/example",
+                which = 1
+            )
+            findNavController().navigate(action)
+            true
+        }
         binding.openOmikujiButton.setOnClickListener {
-            val uri =
-                Uri.parse(BuildConfig.OMIKUJI_URL)
-            startActivity(Intent(Intent.ACTION_VIEW, uri))
+            try {
+                val uri =
+                    Uri.parse(viewModel.pref.openUrl)
+                startActivity(Intent(Intent.ACTION_VIEW, uri))
+            } catch (e: Exception) {
+
+            }
         }
 
         viewModel.verify()
         viewModel.errorMessage.observe(viewLifecycleOwner, {
             Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
         })
+    }
+
+    override fun dialogOk(text: String, which: Int) {
+        viewModel.pref.openUrl = text
     }
 
     override fun dialogOk(which: Int) {

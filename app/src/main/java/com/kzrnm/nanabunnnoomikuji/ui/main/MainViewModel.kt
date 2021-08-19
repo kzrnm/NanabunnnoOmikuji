@@ -14,7 +14,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 class MainViewModel(private val app: Application) : AndroidViewModel(app) {
-    private val pref = SharedPreferencesWrapper(app)
+    val pref = SharedPreferencesWrapper(app)
 
     val loginUserName = TwitterWrapper.info.map { it?.screenName }
     val isLoggedIn = TwitterWrapper.info.map { it != null }
