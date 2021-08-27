@@ -17,216 +17,240 @@
         android:layout_height="match_parent"
         tools:context="com.kzrnm.nanabunnnoomikuji.ui.main.MainFragment">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/login_logout_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@{viewModel.isLoggedIn ? @string/logout : @string/login}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="LOGIN" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/login_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@{viewModel.loginUserName ?? @string/not_logged_in}"
-            app:layout_constraintBaseline_toBaselineOf="@id/login_logout_button"
-            app:layout_constraintStart_toEndOf="@id/login_logout_button" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/license_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/license"
-            app:layout_constraintBaseline_toBaselineOf="@id/login_logout_button"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/open_omikuji_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/open"
-            app:layout_constraintEnd_toEndOf="@+id/omikujiGroup"
-            app:layout_constraintStart_toStartOf="@+id/omikujiGroup"
-            app:layout_constraintTop_toBottomOf="@+id/omikujiGroup" />
-
-        <RadioGroup
-            android:id="@+id/omikujiGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:checkedButton="@={viewModel.omikujiTypeId}"
-            android:orientation="vertical"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/main_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintBottom_toTopOf="@id/main_footer"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radio_omikuji_daikichi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/daikichi" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radio_omikuji_chukichi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chukichi" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/open_omikuji_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/open"
+                    app:layout_constraintEnd_toEndOf="@+id/omikujiGroup"
+                    app:layout_constraintStart_toStartOf="@+id/omikujiGroup"
+                    app:layout_constraintTop_toBottomOf="@+id/omikujiGroup" />
 
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radio_omikuji_shokichi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/shokichi" />
+                <RadioGroup
+                    android:id="@+id/omikujiGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkedButton="@={viewModel.omikujiTypeId}"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-        </RadioGroup>
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radio_omikuji_daikichi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/daikichi" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radio_omikuji_chukichi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/chukichi" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radio_omikuji_shokichi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shokichi" />
+
+                </RadioGroup>
 
 
-        <RadioGroup
-            android:id="@+id/memberGroup"
-            android:layout_width="wrap_content"
+                <RadioGroup
+                    android:id="@+id/memberGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:checkedButton="@={viewModel.omikujiMemberId}"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toEndOf="@+id/omikujiGroup"
+                    app:layout_constraintTop_toTopOf="@+id/omikujiGroup">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radio_member_amaki"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="天城サリー"
+                        tools:ignore="HardcodedText" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radio_member_umino"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="海乃るり"
+                        tools:ignore="HardcodedText" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radio_member_kawase"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="河瀬詩"
+                        tools:ignore="HardcodedText" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radio_member_kuraoka"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="倉岡水巴"
+                        tools:ignore="HardcodedText" />
+
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radio_member_saijo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="西條和"
+                        tools:ignore="HardcodedText" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radio_member_shirosawa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="白沢かなえ"
+                        tools:ignore="HardcodedText" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radio_member_suzuhana"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="涼花萌"
+                        tools:ignore="HardcodedText" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radio_member_takatsuji"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="高辻麗"
+                        tools:ignore="HardcodedText" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radio_member_takeda"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="武田愛奈"
+                        tools:ignore="HardcodedText" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radio_member_miyase"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="宮瀬玲奈"
+                        tools:ignore="HardcodedText" />
+
+                </RadioGroup>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/tweet_text"
+                    android:layout_width="0dp"
+                    android:layout_height="120sp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:text="@={viewModel.tweetText}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/memberGroup"
+                    app:layout_constraintTop_toTopOf="@+id/memberGroup"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/previous_tweet_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@+id/previous_tweet"
+                    android:text="@string/previous_tweet"
+                    app:layout_constraintStart_toStartOf="@+id/tweet_text"
+                    app:layout_constraintTop_toBottomOf="@+id/tweetButton" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/previous_tweet"
+                    android:layout_width="0dp"
+                    android:layout_height="60sp"
+                    android:gravity="top"
+                    android:minHeight="60sp"
+                    android:text="@={viewModel.previousTweetUrl}"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/tweet_text"
+                    app:layout_constraintStart_toStartOf="@+id/previous_tweet_label"
+                    app:layout_constraintTop_toBottomOf="@+id/previous_tweet_label"
+                    tools:ignore="DuplicateSpeakableTextCheck"
+                    tools:text="https://twitter.com/naminodarie/status/1400332266552233111" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/previous_tweet_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.previousTweetTimeText}"
+                    app:layout_constraintEnd_toEndOf="@+id/previous_tweet"
+                    app:layout_constraintTop_toBottomOf="@+id/previous_tweet"
+                    tools:text="2021/07/18 05:24:30" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/tweetButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:enabled="@{viewModel.isLoggedIn &amp;&amp; viewModel.tweetText.length() > 0}"
+                    android:onClick="@{() -> viewModel.tweet()}"
+                    android:text="@string/tweet"
+                    app:layout_constraintEnd_toEndOf="@+id/tweet_text"
+                    app:layout_constraintTop_toBottomOf="@+id/tweet_text" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_footer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:checkedButton="@={viewModel.omikujiMemberId}"
-            android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@+id/omikujiGroup"
-            app:layout_constraintTop_toTopOf="@+id/omikujiGroup">
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radio_member_amaki"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="天城サリー"
-                tools:ignore="HardcodedText" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radio_member_umino"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="海乃るり"
-                tools:ignore="HardcodedText" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radio_member_kawase"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="河瀬詩"
-                tools:ignore="HardcodedText" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radio_member_kuraoka"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="倉岡水巴"
-                tools:ignore="HardcodedText" />
-
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radio_member_saijo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="西條和"
-                tools:ignore="HardcodedText" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radio_member_shirosawa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="白沢かなえ"
-                tools:ignore="HardcodedText" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radio_member_suzuhana"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="涼花萌"
-                tools:ignore="HardcodedText" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radio_member_takatsuji"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="高辻麗"
-                tools:ignore="HardcodedText" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radio_member_takeda"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="武田愛奈"
-                tools:ignore="HardcodedText" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radio_member_miyase"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="宮瀬玲奈"
-                tools:ignore="HardcodedText" />
-
-        </RadioGroup>
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/tweet_text"
-            android:layout_width="0dp"
-            android:layout_height="120sp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="top"
-            android:inputType="textMultiLine"
-            android:text="@={viewModel.tweetText}"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/memberGroup"
-            app:layout_constraintTop_toTopOf="@+id/memberGroup"
-            tools:ignore="SpeakableTextPresentCheck" />
+            app:layout_constraintStart_toStartOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/previous_tweet_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:labelFor="@+id/previous_tweet"
-            android:text="@string/previous_tweet"
-            app:layout_constraintStart_toStartOf="@+id/tweet_text"
-            app:layout_constraintTop_toBottomOf="@+id/tweetButton" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/login_logout_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.isLoggedIn ? @string/logout : @string/login}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="LOGIN" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/previous_tweet"
-            android:layout_width="0dp"
-            android:layout_height="60sp"
-            android:gravity="top"
-            android:minHeight="60sp"
-            android:text="@={viewModel.previousTweetUrl}"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@+id/tweet_text"
-            app:layout_constraintStart_toStartOf="@+id/previous_tweet_label"
-            app:layout_constraintTop_toBottomOf="@+id/previous_tweet_label"
-            tools:ignore="DuplicateSpeakableTextCheck"
-            tools:text="https://twitter.com/naminodarie/status/1400332266552233111" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/login_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{viewModel.loginUserName ?? @string/not_logged_in}"
+                app:layout_constraintBaseline_toBaselineOf="@id/login_logout_button"
+                app:layout_constraintStart_toEndOf="@id/login_logout_button"
+                tools:text="sample" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/previous_tweet_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.previousTweetTimeText}"
-            app:layout_constraintEnd_toEndOf="@+id/previous_tweet"
-            app:layout_constraintTop_toBottomOf="@+id/previous_tweet"
-            tools:text="2021/07/18 05:24:30" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/license_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/license"
+                app:layout_constraintBaseline_toBaselineOf="@id/login_logout_button"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/tweetButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:enabled="@{viewModel.isLoggedIn &amp;&amp; viewModel.tweetText.length() > 0}"
-            android:onClick="@{() -> viewModel.tweet()}"
-            android:text="@string/tweet"
-            app:layout_constraintEnd_toEndOf="@+id/tweet_text"
-            app:layout_constraintTop_toBottomOf="@+id/tweet_text" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

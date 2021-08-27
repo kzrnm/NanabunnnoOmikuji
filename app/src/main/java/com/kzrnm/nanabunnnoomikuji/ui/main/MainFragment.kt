@@ -76,8 +76,8 @@ class MainFragment : Fragment(), OkCancelDialogFragment.Listener,
         }
 
         viewModel.verify()
-        viewModel.errorMessage.observe(viewLifecycleOwner, {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+        viewModel.toastMessage.observe(viewLifecycleOwner, {
+            Toast.makeText(requireContext(), it.message, it.toastLength).show()
         })
     }
 

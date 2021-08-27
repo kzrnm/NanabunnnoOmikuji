@@ -6,6 +6,8 @@ import com.kzrnm.nanabunnnoomikuji.R
 import com.kzrnm.nanabunnnoomikuji.preferences.SharedPreferencesWrapper
 import com.kzrnm.nanabunnnoomikuji.twitter.TwitterWrapper
 import com.kzrnm.nanabunnnoomikuji.twitter.url
+import com.kzrnm.nanabunnnoomikuji.ui.ToastMessage
+import com.kzrnm.nanabunnnoomikuji.ui.ToastMessageEvent
 import kotlinx.coroutines.launch
 import twitter4j.Status
 import java.time.Instant
@@ -44,14 +46,7 @@ class MainViewModel(private val app: Application) : AndroidViewModel(app) {
             else -> ""
         }
     }
-
     val tweetText = MediatorLiveData<String>()
-
-    private fun updatePreviousTweet(status: Status) {
-        pref.savePreviousStatus(status)
-        previousTweetTime.postValue(status.createdAt.toInstant())
-        previousTweetUrl.postValue(status.url)
-    }
 
     val previousTweetUrl = MutableLiveData(pref.lastTweetUrl)
 
@@ -65,7 +60,15 @@ class MainViewModel(private val app: Application) : AndroidViewModel(app) {
                 .format(SimpleDateTimeFormatter)
         }
 
-    val errorMessage = MutableLiveData<String?>()
+    /**
+     * Toastに表示するメッセージ
+     */
+    private val toastMessageState = ToastMessageEvent()
+
+    /**
+     * Toastに表示するメッセージ
+     */
+    val toastMessage = toastMessageState
 
     init {
         val omikujiObserver = Observer<String> {
@@ -94,16 +97,30 @@ class MainViewModel(private val app: Application) : AndroidViewModel(app) {
     fun tweet() = viewModelScope.launch {
         val tweetText = this@MainViewModel.tweetText.value
         if (tweetText.isNullOrBlank()) {
-            errorMessage.postValue(app.getString(R.string.error_empty_tweet))
+            toastMessageState.value = ToastMessage(app.getString(R.string.error_empty_tweet))
             return@launch
         }
         val status = TwitterWrapper.tweet(tweetText, previousTweetUrl.value)
         if (status == null || status.id < 0) {
-            errorMessage.postValue(app.getString(R.string.error_failed_to_tweet))
+            toastMessageState.value = ToastMessage(app.getString(R.string.error_failed_to_tweet))
             return@launch
         }
         updatePreviousTweet(status)
     }
+
+    private fun updatePreviousTweet(status: Status) {
+        pref.savePreviousStatus(status)
+        previousTweetTime.value = status.createdAt.toInstant()
+        previousTweetUrl.postValue(status.url)
+        toastMessageState.value =
+            ToastMessage(
+                app.getString(
+                    R.string.succeeded_in_tweeting_at,
+                    previousTweetTimeText.value
+                )
+            )
+    }
+
 
     companion object {
         val SimpleDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")!!
